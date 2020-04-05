@@ -14,6 +14,8 @@ buildscript {
         junitVersion = "4.12"
         okhttpVersion = "3.12.0"
         jsonPathVersion = "2.4.0"
+        springCloudVersion = "Finchley.RELEASE"
+        springCloudServicesClientLibrariesVersion = "2.0.3.RELEASE"
     }
 
     repositories {
@@ -22,12 +24,21 @@ buildscript {
     }
 
     dependencies {
+    	classpath("io.spring.gradle:dependency-management-plugin:1.0.7.RELEASE")
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
         classpath "mysql:mysql-connector-java:$mysqlVersion"
     }
 }
 
 apply plugin: DependenciesGraphPlugin
+apply plugin: "io.spring.dependency-management"
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Finchley.RELEASE"
+        mavenBom "io.pivotal.spring.cloud:spring-cloud-services-dependencies:2.0.3.RELEASE"
+    }
+}
 
 subprojects {
     group "io.pivotal.pal.tracker"
